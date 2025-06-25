@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225920306772",
+    "project_id": "sistema-login-cadastro-c66b3",
+    "storage_bucket": "sistema-login-cadastro-c66b3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225920306772:android:dfc36a9793df71e6b667c1",
+        "android_client_info": {
+          "package_name": "com.example.sistema_login_cadastro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTQLwrImG3kin1ZA5yXId0dI3kpnIqhvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
