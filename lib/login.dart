@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_login_cadastro/auth.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -6,11 +7,17 @@ class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
 }
-class _LoginState extends State<Login> {
 
+class _LoginState extends State<Login> {
   bool entrar = true;
 
-final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+
+  final AuthServise _authServ = AuthServise();
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +51,18 @@ final _formkey = GlobalKey<FormState>();
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  controller: _emailController,
                   validator: (String? value) {
-                    if(value == null) {
+                    if (value == null) {
                       return "O campo e-mail precisa ser preenchido";
                     }
-                      if(value.length < 5) {
+                    if (value.length < 5) {
                       return "O campo e-mail precisa ter no mínimo 5 caractres";
-                      }
-                      if(!value.contains("@")) {
+                    }
+                    if (!value.contains("@")) {
                       return "O campo e-mail precisa ter arroba ( @ )";
                     }
-                       if(!value.contains(".")) {
+                    if (!value.contains(".")) {
                       return "O campo e-mail precisa ter ponto ( . )";
                     }
                     return null;
@@ -80,13 +88,14 @@ final _formkey = GlobalKey<FormState>();
                 ),
                 const SizedBox(height: 5),
                 TextFormField(
-                        validator: (String? value) {
-                    if(value == null) {
+                  controller: _senhaController,
+                  validator: (String? value) {
+                    if (value == null) {
                       return "O campo Senha precisa ser preenchido";
                     }
-                      if(value.length < 8) {
+                    if (value.length < 8) {
                       return "O campo e-mail precisa ter no mínimo 8 caractres";
-                      }           
+                    }
                     return null;
                   },
                   decoration: InputDecoration(
@@ -114,7 +123,7 @@ final _formkey = GlobalKey<FormState>();
                   child: Column(
                     children: [
                       const SizedBox(height: 5),
-                      TextFormField(
+                      /* TextFormField(
                               validator: (String? value) {
                     if(value == null) {
                       return "O campo e-mail precisa ser preenchido";
@@ -132,7 +141,7 @@ final _formkey = GlobalKey<FormState>();
                             color: Colors.black,
                             fontWeight: FontWeight.w200,
                             fontSize: 16,
-                          ),
+                          ) ,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -143,18 +152,19 @@ final _formkey = GlobalKey<FormState>();
                           fontSize: 16,
                         ),
                         obscureText: true,
-                      ),
+                       ),*/
                       const SizedBox(height: 5),
                       TextFormField(
-                              validator: (String? value) {
-                    if(value == null) {
-                      return "O campo Nome precisa ser preenchido";
-                    }
-                      if(value.length < 3) {
-                      return "O campo Nome precisa ter no mínimo 3 caractres";
-                      }                 
-                    return null;
-                  },
+                        controller: _nomeController,
+                        validator: (String? value) {
+                          if (value == null) {
+                            return "O campo Nome precisa ser preenchido";
+                          }
+                          if (value.length < 3) {
+                            return "O campo Nome precisa ter no mínimo 3 caractres";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Nome",
                           fillColor: Colors.white,
@@ -219,10 +229,23 @@ final _formkey = GlobalKey<FormState>();
       ),
     );
   }
-  botaoEntrar(){
-    if(_formkey.currentState!.validate()) {
-      print("fomulario funcionando");
-    } else{
+
+  botaoEntrar() {
+    String email = _emailController.text;
+    String senha = _senhaController.text;
+    String nome = _nomeController.text;
+
+    if (_formkey.currentState!.validate()) {
+      if (entrar) {
+        print("Entreda validada!");
+      } else {
+        print("Cadastro validado!");
+        print("${_emailController.text}");
+        print("${_senhaController.text}");
+        print("${_nomeController.text}");
+        _authServ.cadUser(email: email, senha: senha, nome: nome);
+      }
+    } else {
       print("formulario NAO funcionando");
     }
   }
